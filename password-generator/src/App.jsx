@@ -14,7 +14,7 @@ function App() {
     let pass = ""
     let str = "ABCDEFGHIJKLMNOPQRTUVWXYZabcdefghijklmnopqrstuvwxyz"
     if (numberAllowed) str += "0123456789";
-    if (charAllowed) str = str + "!@#$%^&*()?|";
+    if (charAllowed) str = str + "!@#$%^&*()?/|";
     for (let i = 1; i <= length; i++) {
       let char = Math.floor(Math.random() * str.length + 1);
       pass += str.charAt(char);
@@ -23,12 +23,26 @@ function App() {
 
   }, [length, numberAllowed, charAllowed,setPassword]);
   
-  const copyClipboard = useCallback(()=>{
+  /*const copyClipboard = useCallback(()=>{
     passRef.current?.select();
-    passRef.current?.setSelectionRange(0,8);
+    passRef.current.focus();
+    passRef.current?.setSelectionRange(0,6);
+    document.execCommand('copy');
     window.navigator.clipboard.writeText(password);
-  },[password])
-
+  },[password])*/
+  const copyClipboard = useCallback(() => {
+    const input = passRef.current;
+    if (!input) return;
+  
+    // Optional: visually select it
+    input.focus();
+    input.setSelectionRange(0, 6);
+  
+    // Actually copy only the selected part
+    const firstSix = input.value.substring(0, 6);
+    navigator.clipboard.writeText(firstSix);
+  }, []);
+  
   
  useEffect(()=>{
   passwordGenerator();
