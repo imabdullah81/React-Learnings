@@ -21,8 +21,8 @@ function App() {
     }
     setPassword(pass);
 
-  }, [length, numberAllowed, charAllowed,setPassword]);
-  
+  }, [length, numberAllowed, charAllowed, setPassword]);
+
   /*const copyClipboard = useCallback(()=>{
     passRef.current?.select();
     passRef.current.focus();
@@ -33,66 +33,86 @@ function App() {
   const copyClipboard = useCallback(() => {
     const input = passRef.current;
     if (!input) return;
-  
+
     // Optional: visually select it
     input.focus();
     input.setSelectionRange(0, 6);
-  
+
     // Actually copy only the selected part
     const firstSix = input.value.substring(0, 6);
     navigator.clipboard.writeText(firstSix);
   }, []);
-  
-  
- useEffect(()=>{
-  passwordGenerator();
- },[length,numberAllowed,charAllowed,passwordGenerator]);
+
+
+  useEffect(() => {
+    passwordGenerator();
+  }, [length, numberAllowed, charAllowed, passwordGenerator]);
   return (
     <>
-      <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 text-orange-500 bg-gray-800 ">
-        <h1 className='text-white text-center my-3'>Password Generator</h1>
-        <div className="flex shadow rounded-lg overflow-hidden mb-4">
-          <input type="text"
-          value={password}
-          className="outline-none w-full py-1 px-3 bg-white text-black"
-          placeholder='password'
-          readOnly
-          ref={passRef}
+      <div className="w-full max-w-md mx-auto shadow-lg rounded-2xl px-6 py-8 my-10 bg-gray-900 text-orange-500">
+        <h1 className="text-white text-center text-2xl font-semibold mb-6">
+          🔐 Password Generator
+        </h1>
+
+        {/* Password Display & Copy Button */}
+        <div className="flex flex-col sm:flex-row items-stretch gap-2 mb-6">
+          <input
+            type="text"
+            value={password}
+            className="w-full py-2 px-4 rounded-lg bg-white text-black outline-none text-sm sm:text-base"
+            placeholder="Generated password"
+            readOnly
+            ref={passRef}
           />
-          <button className='outline-none bg-blue-600 text-white px-3 py-0.5 shrink-0' onClick={copyClipboard}
-          >Copy</button>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-2 rounded-lg text-white font-medium text-sm sm:text-base"
+            onClick={copyClipboard}
+          >
+            Copy
+          </button>
         </div>
-        <div className="flex text-sm gap-x-2">
-          <div className="flex items-center gap-x-1">
-            <input type="range"
-            min={8}
-            max={50}
-            value={length}
-            className='cursor-pointer'
-            onChange={(e) => {setLength(e.target.value)}}
+
+        {/* Settings */}
+        <div className="space-y-4 text-sm">
+          {/* Length Slider */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <label className="text-white font-medium">Length: {length}</label>
+            <input
+              type="range"
+              min={8}
+              max={50}
+              value={length}
+              onChange={(e) => setLength(e.target.value)}
+              className="w-full sm:w-40 cursor-pointer accent-orange-500"
             />
-            <label >Length : {length}</label>
           </div>
-          <div className="flex item-center gap-x-1">
-            <input type="checkbox"
-            defaultChecked={numberAllowed}
-            id='numberInput'
-            onChange={() => setnumberAllowed((prev)=>!prev)}
-            />
-            <label htmlFor="numberInput">Numbers</label>
-          </div>
-          <div className="flex item-center gap-x-1">
-            <input type="checkbox"
-            defaultChecked={charAllowed}
-            id='charInput'
-            onChange={() => setcharAllowed((prev)=>!prev)}
-            />
-            <label htmlFor="charInput">Characters</label>
+
+          {/* Checkboxes */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="checkbox"
+                defaultChecked={numberAllowed}
+                onChange={() => setnumberAllowed((prev) => !prev)}
+                className="accent-orange-500"
+              />
+              Include Numbers
+            </label>
+
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="checkbox"
+                defaultChecked={charAllowed}
+                onChange={() => setcharAllowed((prev) => !prev)}
+                className="accent-orange-500"
+              />
+              Include Special Characters
+            </label>
           </div>
         </div>
       </div>
-
     </>
+
   )
 }
 
