@@ -9,9 +9,10 @@ import ImperativeHandle from './use-imperativehandle.jsx'
 import Context from './use-context.jsx'
 import UseOnlineStatus from './use-debugvalue.jsx'
 import Transition from './use-transition.jsx'
+import Effect from './use-effect.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Transition />
+    <Effect />
   </StrictMode>,
 )
