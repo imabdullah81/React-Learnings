@@ -13,6 +13,6 @@ import Effect from './use-effect.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Effect />
+    <App />
   </StrictMode>,
 )
